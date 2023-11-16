@@ -1,0 +1,119 @@
+executable("FirstSkiaApp") {
+  sources = [
+    # TODO: move sk_app into a static lib
+    "//external/skia/skia/tools/sk_app/Application.h",
+    "//external/skia/skia/tools/sk_app/DisplayParams.h",
+    "//external/skia/skia/tools/sk_app/RasterWindowContext.h",
+    "//external/skia/skia/tools/sk_app/Window.cpp",
+    "//external/skia/skia/tools/sk_app/Window.h",
+    "//external/skia/skia/tools/sk_app/WindowContext.cpp",
+    "//external/skia/skia/tools/sk_app/WindowContext.h",
+
+    # MICROPROFILE
+    "//external//microprofile/microprofile.cpp",
+    "//external//microprofile/microprofile.h",
+    "//external//microprofile/microprofile_html.h",
+    
+    # SOURCES
+    "src/Controls/BaseControl.cpp",
+    "src/Controls/Button.cpp",
+    "src/Controls/ControlsContainer.cpp",
+    "src/Controls/Focus.cpp",
+    "src/Controls/Label.cpp",
+    "src/Controls/Slider.cpp",
+    "src/include/Controls/BaseControl.h",
+    "src/include/Controls/BaseValueControl.h",
+    "src/include/Controls/Button.h",
+    "src/include/Controls/ControlsContainer.h",
+    "src/include/Controls/Focus.h",
+    "src/include/Controls/Label.h",
+    "src/include/Controls/Slider.h",
+    "src/include/Interfaces/IApplication.h",
+    "src/include/Interfaces/IBackground.h",
+    "src/include/Interfaces/IControl.h",
+    "src/include/Interfaces/IControlCaption.h",
+    "src/include/Interfaces/IControlValue.h",
+    "src/include/Interfaces/ILayer.h",
+    "src/include/Interfaces/IPlatformWindow.h",
+    "src/include/Layers/BaseLayer.h",
+    "src/include/Layers/BlackAndWhiteLayer.h",
+    "src/include/Layers/SwirlLayer.h",
+    "src/include/Layers/LinesLayer.h",
+    "src/include/Layers/SpectrumLayer.h",
+    "src/include/Utils/DrawUtils.h",
+    "src/include/Utils/FPS.h",
+    "src/include/Utils/Shaders.h",
+    "src/include/Utils/ThemeUtils.h",
+    "src/include/Utils/Utils.h",
+    "src/include/Application.h",
+    "src/Layers/BlackAndWhiteLayer.cpp",
+    "src/Layers/SwirlLayer.cpp",
+    "src/Layers/LinesLayer.cpp",
+    "src/Layers/SpectrumLayer.cpp",
+    "src/Utils/DrawUtils.cpp",
+    "src/Utils/FPS.cpp",
+    "src/Utils/Shaders.cpp",
+    "src/Utils/ThemeUtils.cpp",
+    "src/Utils/Utils.cpp",
+    "src/Application.cpp",
+  ]
+
+  libs = []
+  public_configs = []
+  include_dirs = [ "src", "//external/skia/skia", "//external/microprofile", "//external/microprofile/stb" ]
+  deps = [
+    "//external/skia",
+    "//resources",
+  ]
+
+  if (is_win) {
+    sources += [
+      "//external/skia/skia/tools/sk_app/win/RasterWindowContext_win.cpp",
+      "//external/skia/skia/tools/sk_app/win/WindowContextFactory_win.h",
+      "//external/skia/skia/tools/sk_app/win/Window_win.cpp",
+      "//external/skia/skia/tools/sk_app/win/Window_win.h",
+      "//external/skia/skia/tools/sk_app/win/main_win.cpp",
+    ]
+
+    libs += [
+      "user32.lib",
+      "gdi32.lib",
+      "ws2_32.lib",
+      "Advapi32.lib",
+      "Shell32.lib"
+    ]
+
+    public_configs += [
+      "//build/config/win:unicode",
+      "//build/config/win:nominmax",
+      "//build/config/win:windowed",
+    ]
+  } else if (is_mac) {
+    sources += [
+      "//external/skia/skia/tools/sk_app/mac/RasterWindowContext_mac.mm",
+      "//external/skia/skia/tools/sk_app/mac/WindowContextFactory_mac.h",
+      "//external/skia/skia/tools/sk_app/mac/Window_mac.h",
+      "//external/skia/skia/tools/sk_app/mac/Window_mac.mm",
+      "//external/skia/skia/tools/sk_app/mac/main_mac.mm",
+    ]
+    deps += [
+      "QuartzCore.framework",
+      "Cocoa.framework",
+      "Foundation.framework",
+    ]
+  }
+
+  #GL
+  public_configs += [ "//external/skia:opengl" ]
+  sources += [
+    "//external/skia/skia/tools/sk_app/GLWindowContext.cpp",
+    "//external/skia/skia/tools/sk_app/GLWindowContext.h",
+    "//external/skia/skia/src/utils/win/SkWGL.h",
+    "//external/skia/skia/src/utils/win/SkWGL_win.cpp",
+  ]
+  if (is_win) {
+    sources += [ "//external/skia/skia/tools/sk_app/win/GLWindowContext_win.cpp" ]
+  } else if (is_mac) {
+    sources += [ "//external/skia/skia/tools/sk_app/mac/GLWindowContext_mac.mm" ]
+  }
+}
