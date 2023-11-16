@@ -27,3 +27,8 @@ bool Utils::IsPointInRect(SkScalar x, SkScalar y, const SkRect& rect)
 {
 	return rect.left() <= x && x <= rect.right() && rect.top() <= y && y <= rect.bottom();
 }
+
+double Utils::MapRange(double value, double fromLow, double fromHigh, double toLow, double toHigh) {
+    return toLow + (value - fromLow) * (toHigh - toLow) / (fromHigh - fromLow);
+}
+
