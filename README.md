@@ -1,3 +1,14 @@
+## Download and build
+
+```bash
+git clone --recursive <url_repository>
+```
+then 
+```bash
+cd FirstSkiaApp
+run build debug
+```
+
 Windows only project (at least, for now) to play with Skia.
 
 ### Hotkeys
