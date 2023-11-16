@@ -10,4 +10,5 @@ sk_sp<SkImage> LoadImageFromFile(const SkString& filePath);
 
 bool IsXInRect(SkScalar x, const SkRect& rect);
 bool IsPointInRect(SkScalar x, SkScalar y, const SkRect& rect);
+double MapRange(double value, double fromLow, double fromHigh, double toLow, double toHigh);
 }
